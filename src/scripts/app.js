@@ -110,6 +110,11 @@ export default class App {
     const pointLight = new THREE.PointLight(color, 1, 1000, 1);
     pointLight.position.set(position.x, position.y, position.z);
 
+    pointLight.shadow.mapSize.width = 2056;  // default
+    pointLight.shadow.mapSize.height = 2056; // default
+    pointLight.shadow.camera.near = 1;       // default
+    pointLight.shadow.camera.far = 1000      // default
+
     this.scene.add(pointLight);
   }
 
@@ -186,8 +191,8 @@ export default class App {
   }
 
   addFloor() {
-    const geometry = new THREE.PlaneGeometry(2000, 2000);
-    const material = new THREE.ShadowMaterial({ opacity: .3 });
+    const geometry = new THREE.PlaneGeometry(2000, 2000, 1, 1);
+    const material = new THREE.ShadowMaterial({ opacity: .2 });
 
     this.floor = new THREE.Mesh(geometry, material);
     this.floor.position.y = 0;
