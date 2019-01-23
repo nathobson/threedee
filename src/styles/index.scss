@@ -335,3 +335,34 @@ a:focus {
     justify-content: center;
   }
 }
+
+////////////////////////////////////////////////////////
+//
+// ->  Edits from nat from here
+//
+////////////////////////////////////////////////////////
+
+body {
+  --color-bg: transparent;
+}
+
+main {
+  width: 100vw;
+  height: 100vh
+}
+
+.perspective-text {
+  // transform: scale(1.0) scaleZ(1.0) rotateX(1deg) skewX(16deg);
+  transform: skewX(-21deg) rotate(-8deg);
+}
+
+p {
+  color: #333333;
+  font-family: serif;
+  font-weight: bold;
+  margin: 0;
+  font-size: 150px;
+  line-height: 1;
+  transform: translate(400px, 200px);
+}
+

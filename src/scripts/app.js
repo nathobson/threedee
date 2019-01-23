@@ -6,14 +6,14 @@ import { radians, map, distance, hexToRgbTreeJs } from './helpers';
 
 export default class App {
   setup() {
-    this.gui = new dat.GUI();
+    // this.gui = new dat.GUI();
 
     this.raycaster = new THREE.Raycaster();
 
     this.backgroundColor = '#1b1b1b';
     this.gutter = { size: 1.2 };
     this.meshes = [];
-    this.grid = { cols: 15, rows: 7 };
+    this.grid = { cols: 15, rows: 15 };
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.mouse3D = new THREE.Vector2();
@@ -24,11 +24,11 @@ export default class App {
       new Cone()
     ];
 
-    const gui = this.gui.addFolder('Background');
+    // const gui = this.gui.addFolder('Background');
 
-    gui.addColor(this, 'backgroundColor').onChange((color) => {
-      document.body.style.backgroundColor = color;
-    });
+    // gui.addColor(this, 'backgroundColor').onChange((color) => {
+    //   document.body.style.backgroundColor = color;
+    // });
 
     window.addEventListener('resize', this.onResize.bind(this), { passive: true });
 
@@ -47,6 +47,8 @@ export default class App {
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     document.body.appendChild(this.renderer.domElement);
+
+    window.scene = this.scene;
   }
 
   createCamera() {
@@ -54,26 +56,26 @@ export default class App {
     const height = window.innerHeight;
 
     this.camera = new THREE.PerspectiveCamera(45, width / height, 1);
-    this.camera.position.set(0, 30, 0);
+    this.camera.position.set(9.0, 10.30, 1.70);
 
     this.scene.add(this.camera);
   }
 
   addAmbientLight() {
-    const obj = { color: '#2900af' };
+    const obj = { color: '#ff0000' };
     const light = new THREE.AmbientLight(obj.color, 1);
 
     this.scene.add(light);
 
-    const gui = this.gui.addFolder('Ambient Light');
+    // const gui = this.gui.addFolder('Ambient Light');
 
-    gui.addColor(obj, 'color').onChange((color) => {
-      light.color = hexToRgbTreeJs(color);
-    });
+    // gui.addColor(obj, 'color').onChange((color) => {
+    //   light.color = hexToRgbTreeJs(color);
+    // });
   }
 
   addSpotLight() {
-    const obj = { color: '#e000ff' };
+    const obj = { color: '#ed00ff' };
     const light = new THREE.SpotLight(obj.color, 1, 1000);
 
     light.position.set(0, 27, 0);
@@ -81,15 +83,15 @@ export default class App {
 
     this.scene.add(light);
 
-    const gui = this.gui.addFolder('Spot Light');
+    // const gui = this.gui.addFolder('Spot Light');
 
-    gui.addColor(obj, 'color').onChange((color) => {
-      light.color = hexToRgbTreeJs(color);
-    });
+    // gui.addColor(obj, 'color').onChange((color) => {
+    //   light.color = hexToRgbTreeJs(color);
+    // });
   }
 
   addRectLight() {
-    const obj = { color: '#0077ff' };
+    const obj = { color: '#ed00ff' };
     const rectLight = new THREE.RectAreaLight(obj.color, 1, 2000, 2000);
 
     rectLight.position.set(5, 50, 50);
@@ -97,11 +99,11 @@ export default class App {
 
     this.scene.add(rectLight);
 
-    const gui = this.gui.addFolder('Rect Light');
+    // const gui = this.gui.addFolder('Rect Light');
 
-    gui.addColor(obj, 'color').onChange((color) => {
-      rectLight.color = hexToRgbTreeJs(color);
-    });
+    // gui.addColor(obj, 'color').onChange((color) => {
+    //   rectLight.color = hexToRgbTreeJs(color);
+    // });
   }
 
   addPointLight(color, position) {
@@ -119,24 +121,24 @@ export default class App {
     this.groupMesh = new THREE.Object3D();
 
     const meshParams = {
-      color: '#ff00ff',
-      metalness: .58,
+      color: '#ed00ff',
+      metalness: .52,
       emissive: '#000000',
-      roughness: .18,
+      roughness: 1,
     };
 
     const material = new THREE.MeshPhysicalMaterial(meshParams);
-    const gui = this.gui.addFolder('Mesh Material');
+    // const gui = this.gui.addFolder('Mesh Material');
 
-    gui.addColor(meshParams, 'color').onChange((color) => {
-      material.color = hexToRgbTreeJs(color);
-    });
-    gui.add(meshParams, 'metalness', 0.1, 1).onChange((val) => {
-      material.metalness = val;
-    });
-    gui.add(meshParams, 'roughness', 0.1, 1).onChange((val) => {
-      material.roughness = val;
-    });
+    // gui.addColor(meshParams, 'color').onChange((color) => {
+    //   material.color = hexToRgbTreeJs(color);
+    // });
+    // gui.add(meshParams, 'metalness', 0.1, 1).onChange((val) => {
+    //   material.metalness = val;
+    // });
+    // gui.add(meshParams, 'roughness', 0.1, 1).onChange((val) => {
+    //   material.roughness = val;
+    // });
 
     for (let row = 0; row < this.grid.rows; row++) {
       this.meshes[row] = [];
@@ -180,6 +182,7 @@ export default class App {
 
   addCameraControls() {
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enabled = false;
   }
 
   addFloor() {
@@ -287,3 +290,4 @@ export default class App {
     requestAnimationFrame(this.animate.bind(this));
   }
 }
+
